@@ -4,9 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.bittech</groupId>
-    <artifactId>chat-room-all</artifactId>
-    <packaging>pom</packaging>
+    <groupId>com.github.jihaojiemo</groupId>
+    <artifactId>chat-room</artifactId>
     <version>1.0.0</version>
 
     <modules>
@@ -14,20 +13,12 @@
         <module>chat-room-client</module>
     </modules>
 
+    <!--配置项目属性-->
     <properties>
-        <java.version>1.8</java.version>
         <encoding>UTF-8</encoding>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <java.version>1.8</java.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
     </properties>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
