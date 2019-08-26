@@ -55,6 +55,7 @@ class WriteToServer implements Runnable {
             //动态的向服务器输入信息，通过Scanner输入
             Scanner scanner = new Scanner(System.in);
             System.out.println("请输入>>>");
+            System.out.println("");
             while (true) {
                 String strFromUser = "";
                 if (scanner.hasNext()) {
@@ -77,7 +78,7 @@ class WriteToServer implements Runnable {
     }
 }
 
-public class MutilThreadClient {
+public class MultiThreadClient {
     public static void main(String[] args) throws IOException {
         //根据指定的IP和端口号建立连接
         Socket client = new Socket("127.0.0.1", 6666);
