@@ -112,7 +112,7 @@ public class MultiThreadServer {
                 }
                 try {
                     PrintStream printStream = new PrintStream(socket.getOutputStream(), true, "UTF-8");
-                    printStream.println("收到群聊消息：" + groupMsg);
+                    printStream.println("收到 " + this.getCurrentUserName(clientLists) + " 的群聊消息：" + groupMsg);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -130,7 +130,7 @@ public class MultiThreadServer {
             //获取输出流
             try {
                 PrintStream printStream = new PrintStream(client.getOutputStream(), true, "UTF-8");
-                printStream.println("收到私聊消息：" + privateMsg);
+                printStream.println("收到 " + this.getCurrentUserName(clientLists) + " 的私聊消息：" + privateMsg);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -140,23 +140,38 @@ public class MultiThreadServer {
          * description: 用户退出流程
          * params:
          */
-        public void userOffline(String userName) {
+        private void userOffline(String userName) {
             //删除Map中的实体
-            System.out.println("用户 " + userName + " 已下线");
-            clientLists.remove(userName, client);
-            System.out.println("当前聊天室人数为：" + clientLists.size());
+            System.out.println("用户 " + this.getCurrentUserName(clientLists) + " 已下线");
             //通知其他用户该用户已下线
             for (Map.Entry<String, Socket> entry : clientLists.entrySet()) {
                 Socket socket = entry.getValue();
+                if (socket.equals(this.client)) {
+                    clientLists.remove(userName, socket);
+                    System.out.println("当前聊天室人数为：" + clientLists.size());
+                    break;
+                }
                 try {
                     PrintStream printStream = new PrintStream(socket.getOutputStream(), true, "UTF-8");
-                    printStream.println("您的好友 " + userName + " 已下线");
+                    printStream.println("您的好友 " + this.getCurrentUserName(clientLists) + " 已下线");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
+
+        //获得Socket对应的用户名
+        private String getCurrentUserName(Map<String, Socket> clientLists) {
+            for (Map.Entry<String, Socket> entry : clientLists.entrySet()) {
+                Socket target = entry.getValue();
+                if (target.equals(this.client)) {
+                    return entry.getKey();
+                }
+            }
+            return "";
+        }
     }
+
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(6666);
